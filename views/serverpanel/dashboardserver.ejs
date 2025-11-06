@@ -1,1 +1,9 @@
 
+<% layout('layout/adminlayout') %>
+<h2>server control panel</h2>
+
+<p>server is currently: <strong><%= serverstatus %></strong></p>
+
+<form action="/serverpanel/restart" method="post">
+  <button type="submit">restart server</button>
+</form>

@@ -1,1 +1,12 @@
+<% layout('layout/adminlayout') %>
+<h2>server admin login</h2>
 
+<form action="/serverpanel/login" method="post">
+  <label>server id</label><br>
+  <input type="text" name="serverid" required><br><br>
+
+  <label>access key</label><br>
+  <input type="password" name="accesskey" required><br><br>
+
+  <button type="submit">login</button>
+</form>

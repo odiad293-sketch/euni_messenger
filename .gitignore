@@ -1,1 +1,16 @@
+# dependencies
+node_modules/
 
+# environment files
+.env
+
+# logs
+logs/
+*.log
+
+# uploads
+public/uploads/
+
+# system files
+.DS_Store
+Thumbs.db

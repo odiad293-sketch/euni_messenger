@@ -1,34 +1,67 @@
 {
   "name": "euni_messenger",
   "version": "1.0.0",
-  "description": "Full-stack messenger application built with Node.js, Express, EJS, and MongoDB.",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
+  "description": "a fully functional messenger app using node.js, express, ejs templates, mongodb, and user authentication",
+  "author": "destiny odia",
+  "license": "mit",
+  "homepage": "https://render.com",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/euni_messenger.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/euni_messenger/issues"
   },
   "keywords": [
     "messenger",
-    "chat",
+    "chat-app",
     "nodejs",
     "express",
+    "mongodb",
+    "socketio",
+    "authentication",
     "ejs",
-    "mongodb"
+    "render"
   ],
-  "author": "Destiny Odia",
-  "license": "MIT",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "lint": "eslint .",
+    "test": "echo \"no test specified\" && exit 0"
+  },
   "dependencies": {
     "bcrypt": "^5.1.1",
-    "compression": "^1.7.4",
-    "cookie-parser": "^1.4.6",
+    "body-parser": "^1.20.3",
+    "connect-flash": "^0.1.1",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
-    "dotenv": "^16.3.1",
-    "ejs": "^3.1.9",
-    "express": "^4.19.2",
-    "helmet": "^7.1.0",
-    "mongoose": "^8.6.0",
-    "morgan": "^1.10.0"
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-session": "^1.18.1",
+    "helmet": "^7.1.2",
+    "jsonwebtoken": "^9.0.2",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.8.1",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.7.5",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.1",
+    "nodemon": "^3.1.0"
   },
   "engines": {
-    "node": ">=18.x"
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "directories": {
+    "config": "./config",
+    "public": "./public",
+    "views": "./views",
+    "routes": "./routes",
+    "models": "./models"
   }
 }

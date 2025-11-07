@@ -1,4 +1,5 @@
 const express = require('express');
+const expressLayouts = require('express-ejs-layouts');
 const http = require('http');
 const path = require('path');
 const helmet = require('helmet');
@@ -42,6 +43,7 @@ app.use(
 app.use(flash());
 
 // ejs template engine
+app.use(expressLayouts); // integrate express-ejs-layouts
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
@@ -53,7 +55,7 @@ app.get('/', (req, res) => {
   res.render('main/index', { title: 'messenger live', message: 'your messenger server is working fine' });
 });
 
-// other routes stay the same
+// other routes (unchanged)
 app.get('/about', (req, res) => {
   res.render('about');
 });

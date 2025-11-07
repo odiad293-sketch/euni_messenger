@@ -1,54 +1,31 @@
 // server.js
+const express = require("express");
+const path = require("path");
+const connectDB = require("./config/databaseConnection");
 
-const express = require('express');
-const path = require('path');
-const session = require('express-session');
-const dotenv = require('dotenv');
-const { connectdb } = require('./config/databaseconnection');
-
-// load environment variables
-dotenv.config();
-
-// create express app
 const app = express();
+const PORT = process.env.PORT || 3000;
 
-// connect to mongodb
-connectdb();
+// Connect to MongoDB
+connectDB();
 
-// setup ejs as view engine
-app.set('view engine', 'ejs');
-app.set('views', path.join(__dirname, 'views'));
-
-// middlewares
-app.use(express.urlencoded({ extended: true }));
+// Middleware
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET || 'defaultsecret',
-    resave: false,
-    saveUninitialized: false,
-  })
-);
+app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, "public")));
 
-// import routes
-const mainroutes = require('./routes/mainroutes');
-const adminroutes = require('./routes/adminroutes');
-const serverpanelroutes = require('./routes/serverpanelroutes');
-const apiroutes = require('./routes/apiroutes');
+// Simple route
+app.get("/", (req, res) => {
+  res.send("🚀 Euni Messenger is running successfully on Render!");
+});
 
-// use routes
-app.use('/', mainroutes);
-app.use('/admin', adminroutes);
-app.use('/server', serverpanelroutes);
-app.use('/api', apiroutes);
+// Error handler (optional)
+app.use((err, req, res, next) => {
+  console.error("Error:", err.message);
+  res.status(500).send("Server Error");
+});
 
-// error handler
-const errorhandler = require('./middleware/errorhandler');
-app.use(errorhandler);
-
-// start server
-const port = process.env.PORT || 3000;
-app.listen(port, () => {
-  console.log(`server running on port ${port}`);
+// Start server
+app.listen(PORT, () => {
+  console.log(`✅ Server is live on port ${PORT}`);
 });

@@ -1,7 +1,7 @@
 // server.js
 const express = require("express");
 const path = require("path");
-const connectDB = require("./config/databaseconnection");
+require("./config/databaseconnection");
 
 const app = express();
 const PORT = process.env.PORT || 3000;

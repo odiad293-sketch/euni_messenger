@@ -1,26 +1,20 @@
+import mongoose from "mongoose";
 
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://odiad293_db_user:<db_password>@cluster0.o6qoja1.mongodb.net/?appName=Cluster0";
-
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
-  }
-});
-
-async function run() {
+const connectDB = async () => {
   try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    await client.close();
+    // Replace <db_password> with your real password
+    const uri = "mongodb+srv://odiad293_db_user:<db_etiosaodia>@cluster0.o6qoja1.mongodb.net/?appName=Cluster0";
+
+    await mongoose.connect(uri, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+
+    console.log("✅ MongoDB connected successfully!");
+  } catch (error) {
+    console.error("❌ MongoDB connection failed:", error.message);
+    process.exit(1); // Stop app if DB fails
   }
-}
-run().catch(console.dir);
+};
+
+export default connectDB;

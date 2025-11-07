@@ -48,9 +48,18 @@ app.set('views', path.join(__dirname, 'views'));
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// test route (homepage)
+// homepage route (only one in views/main/)
 app.get('/', (req, res) => {
-  res.render('index', { title: 'messenger live', message: 'your messenger server is working fine' });
+  res.render('main/index', { title: 'messenger live', message: 'your messenger server is working fine' });
+});
+
+// other routes stay the same
+app.get('/about', (req, res) => {
+  res.render('about');
+});
+
+app.get('/chat', (req, res) => {
+  res.render('chat');
 });
 
 // socket.io setup

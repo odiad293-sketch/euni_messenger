@@ -1,5 +1,7 @@
+// server.js
+
 const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
+const expresslayouts = require('express-ejs-layouts');
 const http = require('http');
 const path = require('path');
 const helmet = require('helmet');
@@ -13,18 +15,20 @@ const methodoverride = require('method-override');
 const { v4: uuidv4 } = require('uuid');
 const socketio = require('socket.io');
 const dotenv = require('dotenv');
-const connectdb = require('./config/databaseconnection');
 
+// load environment variables
 dotenv.config();
 
-// connect to mongodb
-connectdb();
+// connect to mongodb directly from your config
+const connectdb = require('./config/databaseconnection');
+connectdb(); // assumes your mongo URI is already in databaseconnection.js
 
+// create express app
 const app = express();
 const server = http.createServer(app);
 const io = socketio(server);
 
-// middleware setup
+// middleware
 app.use(helmet());
 app.use(morgan('dev'));
 app.use(cors());
@@ -34,7 +38,7 @@ app.use(cookieparser());
 app.use(methodoverride('_method'));
 app.use(
   sessions({
-    secret: process.env.session_secret || 'defaultsecret',
+    secret: 'defaultsecret',
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 24 * 60 * 60 * 1000 }
@@ -43,32 +47,32 @@ app.use(
 app.use(flash());
 
 // ejs template engine
-app.use(expressLayouts);
+app.use(expresslayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'layout/mainlayout'); // ✅ fixed: now looks for views/layout/mainlayout.ejs
+app.set('layout', 'layout/mainlayout');
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// homepage route
-app.get('/', (req, res) => {
-  res.render('main/index', {
-    title: 'messenger live',
-    message: 'your messenger server is working fine'
-  });
+// import routes (all lowercase)
+const mainroutes = require('./routes/mainroutes');
+const adminroutes = require('./routes/adminroutes');
+const serverpanelroutes = require('./routes/serverpanelroutes');
+const apiroutes = require('./routes/apiroutes');
+
+// use routes
+app.use('/', mainroutes);
+app.use('/admin', adminroutes);
+app.use('/server', serverpanelroutes);
+app.use('/api', apiroutes);
+
+// catch-all 404 route
+app.use((req, res) => {
+  res.status(404).render('error/404', { title: 'page not found' });
 });
 
-// other routes
-app.get('/about', (req, res) => {
-  res.render('about');
-});
-
-app.get('/chat', (req, res) => {
-  res.render('chat');
-});
-
-// socket.io setup
+// socket.io chat setup
 io.on('connection', (socket) => {
   console.log('new user connected:', socket.id);
 
@@ -81,8 +85,8 @@ io.on('connection', (socket) => {
   });
 });
 
-// server port
-const port = process.env.port || 3000;
+// start server
+const port = process.env.PORT || 3000;
 server.listen(port, () => {
   console.log(`✅ server is live on port ${port}`);
 });

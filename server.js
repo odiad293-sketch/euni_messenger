@@ -46,7 +46,7 @@ app.use(flash());
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'mainlayout'); // ✅ fixed: now looks directly for views/mainlayout.ejs
+app.set('layout', 'layouts/mainlayout'); // ✅ corrected: looks for views/layouts/mainlayout.ejs
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -84,5 +84,5 @@ io.on('connection', (socket) => {
 // server port
 const port = process.env.port || 3000;
 server.listen(port, () => {
-  console.log(`✅ Server is live on port ${port}`);
+  console.log(`✅ server is live on port ${port}`);
 });

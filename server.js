@@ -43,19 +43,23 @@ app.use(
 app.use(flash());
 
 // ejs template engine
-app.use(expressLayouts); // integrate express-ejs-layouts
+app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
+app.set('layout', 'layouts/mainlayout'); // ✅ tell EJS the default layout file
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
 
-// homepage route (only one in views/main/)
+// homepage route
 app.get('/', (req, res) => {
-  res.render('main/index', { title: 'messenger live', message: 'your messenger server is working fine' });
+  res.render('main/index', {
+    title: 'messenger live',
+    message: 'your messenger server is working fine'
+  });
 });
 
-// other routes (unchanged)
+// other routes
 app.get('/about', (req, res) => {
   res.render('about');
 });
@@ -80,5 +84,5 @@ io.on('connection', (socket) => {
 // server port
 const port = process.env.port || 3000;
 server.listen(port, () => {
-  console.log(`server is live on port ${port}`);
+  console.log(`✅ Server is live on port ${port}`);
 });

@@ -1,12 +1,13 @@
 // controllers/maincontroller.js
+
 exports.gethome = (req, res) => {
-  res.render('index', { title: 'Euni Messenger | Home' });
+  res.render('main/index', { title: 'euni messenger | home' });
 };
 
 exports.getabout = (req, res) => {
-  res.render('about', { title: 'About Euni Messenger' });
+  res.render('main/about', { title: 'about euni messenger' });
 };
 
 exports.getchat = (req, res) => {
-  res.render('chat', { title: 'Chat Room' });
+  res.render('main/chat', { title: 'chat room' });
 };

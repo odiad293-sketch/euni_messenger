@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
-require('dotenv').config(); // make sure this is at the top
+
+const mongoURI = 'mongodb+srv://etiosaodia:destiny@cluster0.a1hcszb.mongodb.net/euni_messenger?retryWrites=true&w=majority&appName=Cluster0';
 
 const connectdb = async () => {
   try {
-    const mongoURI = process.env.MONGO_URI;
     const conn = await mongoose.connect(mongoURI);
     console.log(`✅ MongoDB connected: ${conn.connection.host}`);
   } catch (error) {

@@ -46,7 +46,7 @@ app.use(flash());
 app.use(expressLayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'layouts/mainlayout'); // ✅ corrected: looks for views/layouts/mainlayout.ejs
+app.set('layout', 'layout/mainlayout'); // ✅ fixed: now looks for views/layout/mainlayout.ejs
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));

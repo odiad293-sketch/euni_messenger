@@ -1,5 +1,5 @@
 const express = require('express');
-const expressLayouts = require('express-ejs-layouts');
+const expressLayouts = require('express-ejs-layout');
 const http = require('http');
 const path = require('path');
 const helmet = require('helmet');

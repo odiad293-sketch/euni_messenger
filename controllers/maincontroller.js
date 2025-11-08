@@ -1,5 +1,3 @@
-// controllers/maincontroller.js
-
 exports.gethome = (req, res) => {
   res.render('main/index', { title: 'euni messenger | home' });
 };

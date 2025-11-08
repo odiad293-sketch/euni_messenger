@@ -19,9 +19,9 @@ const dotenv = require('dotenv');
 // load environment variables
 dotenv.config();
 
-// connect to mongodb directly from your config
+// connect to mongodb
 const connectdb = require('./config/databaseconnection');
-connectdb(); // assumes your mongo URI is already in databaseconnection.js
+connectdb(); // your mongo URI is in databaseconnection.js
 
 // create express app
 const app = express();
@@ -38,7 +38,7 @@ app.use(cookieparser());
 app.use(methodoverride('_method'));
 app.use(
   sessions({
-    secret: 'defaultsecret',
+    secret: process.env.SESSION_SECRET || 'defaultsecret',
     resave: false,
     saveUninitialized: false,
     cookie: { maxAge: 24 * 60 * 60 * 1000 }
@@ -50,7 +50,7 @@ app.use(flash());
 app.use(expresslayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'layout/mainlayout');
+app.set('layout', 'layout/mainlayout'); // default layout for all views
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -69,6 +69,7 @@ app.use('/api', apiroutes);
 
 // catch-all 404 route
 app.use((req, res) => {
+  // 404 view is automatically wrapped by mainlayout
   res.status(404).render('error/404', { title: 'page not found' });
 });
 

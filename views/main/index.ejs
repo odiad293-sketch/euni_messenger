@@ -1,0 +1,49 @@
+<% layout('layout/mainlayout') %>
+
+<div class="home-container">
+  <% if (!user) { %>
+    <!-- login/signup form -->
+    <div class="auth-box">
+      <h2>welcome to euni messenger</h2>
+      <form action="/login" method="post">
+        <input type="text" name="username" placeholder="username" required />
+        <input type="password" name="password" placeholder="password" required />
+        <button type="submit">login</button>
+      </form>
+      <p>or <a href="/signup">create a new account</a></p>
+    </div>
+  <% } else { %>
+    <!-- logged in view -->
+    <div class="contacts-section">
+      <div class="profile">
+        <img src="<%= user.profilepic || '/images/default-profile.png' %>" alt="profile">
+        <span class="username"><%= user.username %></span>
+        <span class="status"><%= user.status || 'online' %></span>
+      </div>
+      
+      <div class="contacts-list">
+        <h3>contacts</h3>
+        <% contacts.forEach(contact => { %>
+          <div class="contact">
+            <span class="contact-name"><%= contact.username %></span>
+            <span class="contact-status"><%= contact.status %></span>
+          </div>
+        <% }) %>
+      </div>
+    </div>
+
+    <div class="chat-section">
+      <h3>recent chats</h3>
+      <% chats.forEach(chat => { %>
+        <div class="chat-preview">
+          <span class="chat-user"><%= chat.contact %></span>
+          <span class="chat-last-message"><%= chat.lastMessage %></span>
+        </div>
+      <% }) %>
+      <a href="/chat" class="open-chat-btn">open chat room</a>
+    </div>
+  <% } %>
+</div>
+
+<link rel="stylesheet" href="/css/homestyles.css">
+<script src="/js/clientsidefunctions.js"></script>

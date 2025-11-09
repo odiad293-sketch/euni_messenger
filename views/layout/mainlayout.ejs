@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title><%= title %></title>
+  <link rel="stylesheet" href="/css/mainstyles.css" />
+</head>
+<body>
+  <header>
+    <h1>euni messenger</h1>
+    <nav>
+      <a href="/">home</a>
+      <a href="/about">about</a>
+      <a href="/chat">chat</a>
+    </nav>
+  </header>
+
+  <main class="container">
+    <%- body %>
+  </main>
+
+  <footer>
+    <p>&copy; <%= new Date().getFullYear() %> euni messenger</p>
+  </footer>
+
+  <script src="/js/clientsidefunctions.js"></script>
+</body>
+</html>

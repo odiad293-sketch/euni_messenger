@@ -1,8 +1,6 @@
 // server.js
-
 const express = require('express');
 const expresslayouts = require('express-ejs-layouts');
-const http = require('http');
 const path = require('path');
 const helmet = require('helmet');
 const morgan = require('morgan');
@@ -13,15 +11,15 @@ const sessions = require('express-session');
 const flash = require('connect-flash');
 const methodoverride = require('method-override');
 const { v4: uuidv4 } = require('uuid');
+const http = require('http');
 const socketio = require('socket.io');
 const dotenv = require('dotenv');
 
-// load environment variables
 dotenv.config();
 
-// connect to mongodb
+// MongoDB connection
 const connectdb = require('./config/databaseconnection');
-connectdb(); // your mongo URI is in databaseconnection.js
+connectdb(); // your Mongo URI is in databaseconnection.js
 
 // create express app
 const app = express();
@@ -41,7 +39,7 @@ app.use(
     secret: process.env.SESSION_SECRET || 'defaultsecret',
     resave: false,
     saveUninitialized: false,
-    cookie: { maxAge: 24 * 60 * 60 * 1000 }
+    cookie: { maxAge: 24 * 60 * 60 * 1000 },
   })
 );
 app.use(flash());
@@ -50,7 +48,7 @@ app.use(flash());
 app.use(expresslayouts);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
-app.set('layout', 'layout/mainlayout'); // default layout for all views
+app.set('layout', 'layout/mainlayout'); // default layout for all main views
 
 // static files
 app.use(express.static(path.join(__dirname, 'public')));
@@ -69,11 +67,10 @@ app.use('/api', apiroutes);
 
 // catch-all 404 route
 app.use((req, res) => {
-  // 404 view is automatically wrapped by mainlayout
-  res.status(404).render('error/404', { title: 'page not found' });
+  res.status(404).render('error/404', { title: 'page not found', layout: 'layout/mainlayout' });
 });
 
-// socket.io chat setup
+// socket.io setup
 io.on('connection', (socket) => {
   console.log('new user connected:', socket.id);
 
